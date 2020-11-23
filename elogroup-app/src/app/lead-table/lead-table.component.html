@@ -1,0 +1,40 @@
+<div class="example-container">
+    <h2>Cliente em Potencial</h2>
+  
+    <div
+      cdkDropList
+      #clientesEmPotencial="cdkDropList"
+      [cdkDropListData]="lista1"
+      [cdkDropListConnectedTo]="[dadosConfirmados]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of lista1" cdkDrag>{{item.nome}}</div>
+    </div>
+</div>
+  
+<div class="example-container">
+    <h2>Dados Confirmados</h2>
+  
+    <div
+      cdkDropList
+      #dadosConfirmados="cdkDropList"
+      [cdkDropListData]="lista2"
+      [cdkDropListConnectedTo]="[reuniaoAgendada]"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of lista2" [cdkDragData]="item" cdkDrag>{{item.nome}}</div>
+    </div>
+</div>
+
+<div class="example-container">
+    <h2>Reunião Agendada</h2>
+  
+    <div
+      cdkDropList
+      #reuniaoAgendada="cdkDropList"
+      [cdkDropListData]="lista3"
+      class="example-list"
+      (cdkDropListDropped)="drop($event)">
+      <div class="example-box" *ngFor="let item of lista3" [cdkDragData]="item" cdkDrag>{{item.nome}}</div>
+    </div>
+</div>

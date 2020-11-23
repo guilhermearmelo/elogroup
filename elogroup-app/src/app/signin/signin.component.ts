@@ -10,6 +10,7 @@ import { AuthService } from '../auth.service';
 export class SigninComponent implements OnInit {
 
   loginForm: FormGroup;
+  user: any;
   @ViewChild('userNameInput') userNameInput: ElementRef<HTMLInputElement>;
 
   constructor( 
@@ -28,11 +29,11 @@ export class SigninComponent implements OnInit {
   login(){
     const username = this.loginForm.get('userName').value;
     const password = this.loginForm.get('password').value;
-
+  
     this.authService
       .authenticate(username,password)
       .subscribe(
-        () => this.router.navigate(['user', username]),
+        user => this.router.navigate(['user', user]),
         err => {
           console.log(err);
           this.loginForm.reset();
