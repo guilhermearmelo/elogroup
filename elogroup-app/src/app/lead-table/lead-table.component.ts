@@ -3,6 +3,7 @@ import { CdkDragEnter, CdkDragDrop, moveItemInArray, transferArrayItem } from '@
 import { UserService } from '../user.service';
 import { Lead } from '../models/lead';
 import { ActivatedRoute } from '@angular/router';
+import { LeadService } from '../lead.service';
 
 @Component({
   selector: 'app-lead-table',
@@ -23,6 +24,7 @@ export class LeadTableComponent implements OnInit {
 
   constructor( 
     private userService: UserService,
+    private leadService: LeadService,
     private activatedRoute: ActivatedRoute
   ) { }
 
@@ -36,8 +38,62 @@ export class LeadTableComponent implements OnInit {
         this.leadList = leads;
         this.selectLeads();
       });
+  }
 
-    
+  drop(event: CdkDragDrop<string[]>) {
+
+    var lista1Length = this.lista1.length;
+    var lista2Length = this.lista2.length;
+    var lista3Length = this.lista3.length;
+    var update = false;
+
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(event.previousContainer.data,
+                        event.container.data,
+                        event.previousIndex,
+      event.currentIndex);
+      
+      var lista1NewLength = this.lista1.length;
+      var lista2NewLength = this.lista2.length;
+      var lista3NewLength = this.lista3.length;
+
+      // transfer from (1 to 2) or (2 to 3)
+      if(lista1Length > lista1NewLength && lista2Length < lista2NewLength){
+        this.leadX = event.container.data[0] as unknown as Lead;
+        for(const x of this.lista2){
+          if(x.id == this.leadX.id){
+            x.status+=1;
+          }
+        }
+        update = true;
+      } else if(lista2Length > lista2NewLength && lista3Length < lista3NewLength){ // transfer from 2 to 3
+        this.leadX = event.container.data[0] as unknown as Lead;
+        for(const x of this.lista3){
+          if(x.id == this.leadX.id){
+            x.status+=1;
+          }
+        }
+        update = true;
+      }
+      
+      if(update){
+        update = false;
+        this.leadService
+          .updateLeadStatus(this.leadX)
+          .subscribe(res => {
+            for(const x of this.leadList){
+              if(x.id == res.id){
+                x.status++;
+              }
+            }
+            this.selectLeads();
+          });
+      }
+
+    }
+
   }
 
   selectLeads(){
@@ -57,23 +113,5 @@ export class LeadTableComponent implements OnInit {
     console.log(this.lista2);
     console.log(this.lista3);
   }
-
-  drop(event: CdkDragDrop<string[]>) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } else {
-      transferArrayItem(event.previousContainer.data,
-                        event.container.data,
-                        event.previousIndex,
-                        event.currentIndex);
-        this.leadX = event.container.data as unknown as Lead;
-        console.log(this.leadX.nome);
-    }
-  }
-
-  // entered(event: CdkDragEnter<string[]>) {
-  //   console.log('Olá' + event.currentIndex);
-  //   //console.log('Moveu item: ', event.item);
-  // }
 
 }
