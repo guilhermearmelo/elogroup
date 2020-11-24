@@ -88,7 +88,7 @@ export class LeadTableComponent implements OnInit {
                 x.status++;
               }
             }
-            this.selectLeads();
+            //this.selectLeads();
           });
       }
 
