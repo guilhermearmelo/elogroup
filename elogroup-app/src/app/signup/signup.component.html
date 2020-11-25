@@ -10,10 +10,15 @@
             class="form-control" 
             autofocus
         >
-        <ap-vmessage
+        <small 
+            *ngIf="signUpForm.get('userName').errors?.userNameTaken"
+            class="text-danger d-block mt-2">
+            Nome de usuário já existente
+        </small>
+        <!-- <ap-vmessage
             text="Nome de usuário já existente"
             *ngIf="signUpForm.get('userName').errors?.userNameTaken">
-        </ap-vmessage>
+        </ap-vmessage> -->
         <small *ngIf="signUpForm.get('userName').valid" class="text-success">Nome de usuário disponível</small>
     </div>
 
@@ -25,6 +30,13 @@
         >
         <small
             *ngIf="signUpForm.get('password').errors?.required"
+            class="text-danger d-block mt-2">
+            Password deve possuir pelo menos 8 caracteres, contendo ao
+menos, um caracter especial, um caracter numérico, um caracter
+alfanumérico!
+        </small>
+        <small
+            *ngIf="signUpForm.get('password').errors?.pattern"
             class="text-danger d-block mt-2">
             Password deve possuir pelo menos 8 caracteres, contendo ao
 menos, um caracter especial, um caracter numérico, um caracter
@@ -42,7 +54,12 @@ alfanumérico!
             *ngIf="signUpForm.get('confirmPassword').errors?.required"
             class="text-danger d-block mt-2">
             A confirmação de senha é obrigatória!
-        </small> 
+        </small>
+        <small
+            *ngIf="!signUpForm.get('confirmPassword').errors?.required && signUpForm.invalid"
+            class="text-danger d-block mt-2">
+            A senha e a  confirmação de senha devem ser iguais!
+        </small>
     </div>
 
     <button [disabled]="signUpForm.invalid || signUpForm.pending" class="btn btn-primary btn-block" >Cadastrar</button>

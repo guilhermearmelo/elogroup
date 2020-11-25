@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { User } from './models/user';
 
 const API_URL = 'http://localhost:8080';
@@ -24,5 +25,13 @@ export class SignupService {
     return this.http.post(API_URL + '/api/usuario/' , userData);
   }
 
-  
+  matchValues( matchTo: string ) : (AbstractControl) => ValidationErrors | null {
+    return (control: AbstractControl): ValidationErrors | null => {
+      return !!control.parent &&
+        !!control.parent.value &&
+        control.value === control.parent.controls[matchTo].value
+        ? null
+        : { isMatching: false };
+    };
+}
 }
