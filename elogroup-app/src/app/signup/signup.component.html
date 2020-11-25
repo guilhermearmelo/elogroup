@@ -45,6 +45,7 @@ alfanumérico!
         </small> 
     </div>
 
-    <button [disabled]="signUpForm.invalid || signUpForm.pending" class="btn btn-primary btn-block">Cadastrar</button>
-
+    <button [disabled]="signUpForm.invalid || signUpForm.pending" class="btn btn-primary btn-block" >Cadastrar</button>
+    
+    <p>Já é usuário?<a [routerLink]="['']">Entre aqui!</a></p>
 </form>
