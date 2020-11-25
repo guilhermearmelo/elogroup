@@ -1,0 +1,63 @@
+<div class="container">
+    <mat-toolbar>
+        <span class="fill-remaining-space"></span>
+        <span>Novo Lead</span>
+        <span class="fill-remaining-space"></span>
+    </mat-toolbar>
+</div>
+
+<form [formGroup]="leadService.form" class="normal-form">
+    <mat-grid-list cols="2" rowHeight="300px">
+        <mat-grid-tile>
+            <div class="controles-container">
+                <input type="hidden" formControlName="id">
+                <mat-form-field>
+                    <input formControlName="nome" matInput placeholder="Nome*">
+                    <mat-error>O Campo nome é obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="telefone" matInput placeholder="Telefone*">
+                    <mat-error>O Campo Telefone é obrigatório</mat-error>
+                </mat-form-field>
+                <mat-form-field>
+                    <input formControlName="email" matInput placeholder="Email*">
+                    <mat-error>Por favor, insira um Email válido</mat-error>
+                </mat-form-field>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <div class="controles-container">
+                <div class="add-bottom-padding">
+                    <mat-checkbox formControlName="opRPA" (click)="leadService.hardCheck()">Selecionar Todos</mat-checkbox>
+                </div>
+                <div class="add-bottom-padding">
+                    <mat-checkbox formControlName="opRPA">RPA</mat-checkbox>
+                </div>
+                <div class="add-bottom-padding">
+                    <mat-checkbox formControlName="opProdDigital">Produto Digital</mat-checkbox>
+                </div>
+                <div class="add-bottom-padding">
+                    <mat-checkbox formControlName="opAnalytics">Analytics</mat-checkbox>
+                </div>
+                <div class="add-bottom-padding">
+                    <mat-checkbox formControlName="opBPM">BPM</mat-checkbox>
+                </div>
+                <div class="button-row">
+                    <button 
+                        mat-raised-button 
+                        color="primary" 
+                        type="submit" 
+                        [disabled]="leadService.form.invalid"
+                        (click)="onSubmit()"
+                    >Salvar</button>
+
+                    <button 
+                        mat-raised-button 
+                        color="basic"
+                        (click)="onClose()"
+                    >Voltar</button>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</form>

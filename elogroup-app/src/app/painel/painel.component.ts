@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { LeadDialogComponent } from '../lead-dialog/lead-dialog.component';
 import { Lead } from '../models/lead';
 import { UserService } from '../user.service';
 
@@ -11,11 +13,20 @@ import { UserService } from '../user.service';
 export class PainelComponent implements OnInit {
 
   constructor(
-    // private userService: UserService,
-    // private activatedRoute: ActivatedRoute
+    private dialog: MatDialog
   ) { 
 
   }
 
   ngOnInit(): void { }
+
+  openDialog() {
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = "60%";
+ 
+    this.dialog.open(LeadDialogComponent, dialogConfig);
+  }
 }

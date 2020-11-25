@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { CdkDragEnter, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { UserService } from '../user.service';
 import { Lead } from '../models/lead';
@@ -25,12 +25,16 @@ export class LeadTableComponent implements OnInit {
   constructor( 
     private userService: UserService,
     private leadService: LeadService,
-    private activatedRoute: ActivatedRoute
-  ) { }
+    private activatedRoute: ActivatedRoute,
+    private ref: ChangeDetectorRef
+  ) { 
+
+  }
 
   ngOnInit(): void {
     
     const userId = this.activatedRoute.snapshot.params.id;
+    this.leadService.workingId = userId;
 
     this.userService
       .getLeadsByUser(userId)
@@ -85,7 +89,7 @@ export class LeadTableComponent implements OnInit {
           .subscribe(res => {
             for(const x of this.leadList){
               if(x.id == res.id){
-                x.status++;
+                if(x.status < 2) x.status++;
               }
             }
             //this.selectLeads();
