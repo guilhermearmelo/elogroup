@@ -22,6 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { SignupComponent } from './signup/signup.component';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { SignupComponent } from './signup/signup.component';
     MatFormFieldModule,
     MatInputModule,
     MatCheckboxModule,
-    MatButtonModule
+    MatButtonModule,
+    MatSnackBarModule
   ],
   providers: [LeadService],
   bootstrap: [AppComponent],
